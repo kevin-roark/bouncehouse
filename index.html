@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/png" href="/media/favicon.png">
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>SHEEN</title>
+
+    <meta name="description" content="" />
+    <meta name="author" content="">
+    <meta name="keywords" content="made w/ sheen">
+
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:description" content=""/>
+    <meta property="og:url" content=""/>
+
+    <meta property="fb:admins" content="100000919641751"/>
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@LIMP__BISCUIT" />
+    <meta name="twitter:creator" content="@LIMP__BISCUIT" />
+</head>
+<body>
+    <!-- content -->
+
+    <div class="webgl-error">Please Upgrade Browser</div>
+    <div id="mobile-error-overlay">
+      <p>
+        fill this in idiot
+      </p>
+    </div>
+
+    <div class="splash-overlay">
+      <div class="title">SHEEN</div>
+      <div id="splash-status">is loading</div>
+      <div id="splash-please-use-chrome">
+        This is not Google Chrome. You may proceed.
+      </div>
+      <div id="splash-controls">
+        <div id="splash-disclaimer">
+          why do you do this
+        </div>
+
+        move the mouse to look<br>
+        use W,A,S,D and SPACE keys to move your body<br>
+      </div>
+      <div id="click-to-start">click to start</div>
+    </div>
+    
+    <!-- shaders -->
+
+    <script type="x-shader/x-vertex" id="skyVertexShader">
+			varying vec3 vWorldPosition;
+
+			void main() {
+				vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+				vWorldPosition = worldPosition.xyz;
+
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			}
+		</script>
+
+		<script type="x-shader/x-fragment" id="skyFragmentShader">
+			uniform vec3 topColor;
+			uniform vec3 bottomColor;
+			uniform float offset;
+			uniform float exponent;
+
+			varying vec3 vWorldPosition;
+
+			void main() {
+				float h = normalize( vWorldPosition + offset ).y;
+				gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+			}
+		</script>
+
+    <!-- scripts -->
+    <script src="js/build/build.js"></script>
+</body>
+</html>
